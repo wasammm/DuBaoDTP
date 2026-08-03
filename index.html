@@ -57,7 +57,7 @@
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { margin-bottom: 14px; }
+        .form-group { margin-bottom: 14px; page-break-inside: avoid; break-inside: avoid; }
         label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.88em; color: var(--muted); }
         input[type="text"], input[type="number"], select {
             width: 100%; padding: 10px 12px; box-sizing: border-box; border: 1.5px solid var(--border);
@@ -75,29 +75,44 @@
         .btn-run { background: var(--warning); box-shadow: 0 4px 14px rgba(234,88,12,0.3); }
         .btn-run:hover { background: #c2410c; }
 
-        .export-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .export-buttons { display: flex; gap: 10px; margin-top: 15px; page-break-inside: avoid; break-inside: avoid; }
         .btn-excel { background: var(--success); color: white; border: none; padding: 11px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; flex: 1; font-family: inherit; transition: background .15s, transform .12s; }
         .btn-excel:hover { background: #15803d; transform: translateY(-1px); }
         .btn-pdf { background: var(--danger); color: white; border: none; padding: 11px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; flex: 1; font-family: inherit; transition: background .15s, transform .12s; }
         .btn-pdf:hover { background: #b91c1c; transform: translateY(-1px); }
 
-        .result-section, .preview-section { margin-top: 28px; background: #fff; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); animation: fadeIn .35s ease; }
+        .result-section, .preview-section { margin-top: 28px; background: #fff; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); animation: fadeIn .35s ease; page-break-inside: auto; }
         @keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
 
         .table-wrapper { max-height: 350px; overflow-y: auto; margin-top: 10px; border: 1px solid var(--border); border-radius: 8px; }
 
-        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; page-break-inside: auto; }
         th, td { border-bottom: 1px solid var(--border); padding: 10px 8px; text-align: center; }
         th { background: var(--primary); color: white; position: sticky; top: 0; z-index: 10; font-weight: 600; }
         tbody tr:nth-child(even) { background: #f8fafc; }
         tbody tr:hover { background: var(--primary-light); }
-        tr { page-break-inside: avoid; }
+        tr { page-break-inside: avoid; break-inside: avoid; }
 
-        .chart-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 14px; margin-bottom: 20px; }
+        .chart-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 14px; margin-bottom: 20px; page-break-inside: avoid; break-inside: avoid; }
         .chart-container { position: relative; height: 300px; width: 100%; }
 
-        .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 10px; }
-        .kpi-card { background: var(--primary-light); border: 1px solid #dbeafe; border-radius: 10px; padding: 14px 16px; }
+        /* Cấu hình PDF: Trang thông thường A4 dọc, trang biểu đồ riêng biệt A4 ngang */
+        @page {
+            size: A4 portrait;
+            margin: 15mm;
+        }
+        @page landscape-page {
+            size: A4 landscape;
+            margin: 15mm;
+        }
+        .page-landscape-break {
+            page: landscape-page;
+            page-break-before: always;
+            break-before: page;
+        }
+
+        .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 10px; page-break-inside: avoid; break-inside: avoid; }
+        .kpi-card { background: var(--primary-light); border: 1px solid #dbeafe; border-radius: 10px; padding: 14px 16px; page-break-inside: avoid; break-inside: avoid; }
         .kpi-card .kpi-label { font-size: 0.78em; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 6px; }
         .kpi-card .kpi-value { font-size: 1.25em; font-weight: 800; color: var(--ink); }
         .kpi-card .kpi-sub { font-size: 0.8em; margin-top: 4px; font-weight: 600; }
@@ -105,7 +120,7 @@
         .kpi-card.m1 { background: var(--success-light); border-color: #bbf7d0; }
         .kpi-card.m2 { background: var(--primary-light); border-color: #dbeafe; }
 
-        .import-box { background: var(--success-light); padding: 18px; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); margin-bottom: 22px; border-radius: 10px; }
+        .import-box { background: var(--success-light); padding: 18px; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); margin-bottom: 22px; border-radius: 10px; page-break-inside: avoid; break-inside: avoid; }
         .import-box small { color: var(--muted); }
 
         .badge { display:inline-block; padding: 3px 10px; border-radius: 999px; font-weight: 700; font-size: 0.85em; }
@@ -222,10 +237,13 @@
             <button class="btn-pdf" onclick="exportToPDF()">📄 Xuất Báo Cáo PDF (.pdf)</button>
         </div>
 
-        <h3 style="margin-top: 26px;">📈 Biểu đồ Dự báo Tổng Phụ tải Khu vực (30 Ngày Tháng T+1)</h3>
-        <div class="chart-card">
-            <div class="chart-container">
-                <canvas id="forecastChart"></canvas>
+        <!-- Trang Biểu đồ riêng biệt: Định dạng A4 Ngang (Landscape) -->
+        <div class="page-landscape-break">
+            <h3 style="margin-top: 36px;">📈 Biểu đồ Dự báo Tổng Phụ tải Khu vực (30 Ngày Tháng T+1)</h3>
+            <div class="chart-card">
+                <div class="chart-container">
+                    <canvas id="forecastChart"></canvas>
+                </div>
             </div>
         </div>
 
@@ -255,7 +273,6 @@ let rawImportedCustomers = [];
 let globalReportData = [];
 let myChart = null;
 
-// Hàm định dạng số
 function formatNum(num) {
     return Math.round(num).toLocaleString('vi-VN');
 }
@@ -278,12 +295,9 @@ document.getElementById('importFile').addEventListener('change', function(e) {
         let totalBaseVolume = 0;
 
         jsonData.forEach((row, index) => {
-            // Sửa lỗi: kiểm tra MaKH bằng !== undefined/null/'' thay vì truthy,
-            // vì Mã KH có thể là số 0 hoặc chuỗi "0" (giá trị falsy nhưng hợp lệ)
             let hasMaKH = row['MaKH'] !== undefined && row['MaKH'] !== null && String(row['MaKH']).trim() !== '';
             if (hasMaKH && row['DienThangTruoc'] !== undefined) {
                 let parsedVolume = parseFloat(row['DienThangTruoc']);
-                // Sửa lỗi: chặn sản lượng âm hoặc NaN để tránh làm sai lệch toàn bộ phép tính dự báo
                 let volume = (isNaN(parsedVolume) || parsedVolume < 0) ? 0 : parsedVolume;
                 rawImportedCustomers.push({
                     id: index,
@@ -298,7 +312,6 @@ document.getElementById('importFile').addEventListener('change', function(e) {
         if (rawImportedCustomers.length > 0) {
             document.getElementById('previewArea').style.display = 'block';
 
-            // Cập nhật KPI tổng quan
             document.getElementById('previewSummaryText').innerHTML = `
                 <div class="kpi-card">
                     <div class="kpi-label">Tổng số dòng hợp lệ</div>
@@ -310,7 +323,6 @@ document.getElementById('importFile').addEventListener('change', function(e) {
                 </div>
             `;
 
-            // Vẽ bảng Preview
             let tbody = "";
             rawImportedCustomers.forEach((cust, i) => {
                 tbody += `<tr>
@@ -324,7 +336,6 @@ document.getElementById('importFile').addEventListener('change', function(e) {
             document.querySelector("#previewTable tbody").innerHTML = tbody;
             document.getElementById('selectAll').checked = true;
 
-            // Reset các kết quả cũ (nếu có)
             document.getElementById('resultsArea').style.display = 'none';
         } else {
             alert("Không tìm thấy dữ liệu hợp lệ! Vui lòng kiểm tra lại 3 cột: MaKH, TenKH, DienThangTruoc.");
@@ -333,7 +344,6 @@ document.getElementById('importFile').addEventListener('change', function(e) {
     reader.readAsArrayBuffer(file);
 });
 
-// Chức năng Check All trong bảng Preview
 function toggleAllCheckboxes(source) {
     let checkboxes = document.querySelectorAll('.row-checkbox');
     checkboxes.forEach(chk => chk.checked = source.checked);
@@ -341,10 +351,9 @@ function toggleAllCheckboxes(source) {
 
 
 // ----------------------------------------------------
-// TÍNH NĂNG 2: GỌI API THỜI TIẾT THỰC TẾ & CHẠY DỰ BÁO
+// TÍNH NĂNG 2: GỌI API THỜI TIẾT (TMAX) & CHẠY DỰ BÁO
 // ----------------------------------------------------
 async function runCustomerForecast() {
-    // 1. Lọc ra các khách hàng được người dùng tick chọn
     let checkboxes = document.querySelectorAll('.row-checkbox:checked');
     if (checkboxes.length === 0) {
         alert("Vui lòng tick chọn ít nhất một khách hàng trong danh sách để dự báo!");
@@ -362,43 +371,36 @@ async function runCustomerForecast() {
     let growthRate = parseFloat(document.getElementById('monthlyGrowth').value) || 0;
     let sensitivity = parseFloat(document.getElementById('tempSensitivity').value) || 0;
     let source = document.getElementById('weatherSource').value;
-    // Nhiệt độ nền nay lấy từ ô nhập của người dùng (trước đây bị hard-code 28°C,
-    // vốn được hiệu chỉnh cho nhiệt độ TRUNG BÌNH — sai lệch khi so với nhiệt độ CAO NHẤT)
     let baselineTemp = parseFloat(document.getElementById('baselineTemp').value);
     if (isNaN(baselineTemp)) baselineTemp = 33.5;
 
     let dailyTemperatures = [];
 
-    // 2. Lấy dự báo nhiệt độ CAO NHẤT trong ngày
+    // Lấy nhiệt độ CAO NHẤT trong ngày từ Open-Meteo API (temperature_2m_max)
     if (source === 'api_realtime') {
         try {
-            // Sử dụng Open-Meteo API (Free, không cần Key). Lấy nhiệt độ cao nhất (Tmax) dự báo 16 ngày,
-            // tọa độ KV Đồng bằng Sông Cửu Long
             const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=10.0128&longitude=105.0809&daily=temperature_2m_max&timezone=Asia%2FBangkok&forecast_days=16");
             const data = await res.json();
             const apiTemps = data.daily.temperature_2m_max;
 
             if (!apiTemps || apiTemps.length === 0) throw new Error("API không trả về dữ liệu Tmax");
 
-            // API miễn phí trả về 16 ngày, ta sẽ lặp lại chu kỳ để tạo thành 30 ngày (chu kỳ thời tiết khá thực tế)
             for (let i = 0; i < 30; i++) {
                 dailyTemperatures.push(apiTemps[i % apiTemps.length]);
             }
         } catch (error) {
             console.error(error);
-            alert("Lỗi kết nối API thời tiết. Hệ thống sẽ chuyển sang dùng số liệu giả lập mượt.");
-            // Số liệu giả lập cũng được hiệu chỉnh về thang nhiệt độ CAO NHẤT (không còn dùng nền 28°C của nhiệt độ trung bình)
+            alert("Lỗi kết nối API thời tiết. Hệ thống chuyển sang dùng dữ liệu giả lập nhiệt độ cao nhất.");
             for (let i = 1; i <= 30; i++) dailyTemperatures.push(33.5 + Math.sin(i / 3) * 1.8);
         }
     } else {
-        // Kịch bản El Nino cực đoan: nhiệt độ CAO NHẤT trong ngày dao động 35 - 39°C
+        // Kịch bản El Nino cực đoan (nhiệt độ cao nhất 35 - 39°C)
         for (let i = 1; i <= 30; i++) dailyTemperatures.push(35.0 + Math.random() * 4);
     }
 
     document.getElementById('loadingOverlay').classList.remove('show');
     document.getElementById('resultsArea').style.display = 'block';
 
-    // 3. Tính toán Hệ thống (Vĩ mô)
     let totalBaseSystemLoad = selectedCustomers.reduce((sum, c) => sum + c.dienThangTruoc, 0);
     let dailyBaseSystemLoad = totalBaseSystemLoad / 30;
 
@@ -406,13 +408,6 @@ async function runCustomerForecast() {
     let dailySystemForecast = [];
     let sumTemp = 0;
 
-    // Sửa lỗi logic: trước đây tăng trưởng hàng ngày (growthRate/100/30) được áp CỐ ĐỊNH
-    // như nhau cho cả 30 ngày (không cộng dồn theo thời gian), khiến tổng tăng trưởng cả
-    // tháng trên biểu đồ nhỏ hơn rất nhiều so với tăng trưởng %/tháng đã khai báo và không
-    // khớp với tổng dự báo T+1 tính theo từng khách hàng bên dưới.
-    // Nay tính hệ số tăng trưởng cộng dồn (compounding) từng ngày để đến ngày 30 đạt đúng
-    // mức tăng trưởng growthRate% đã nhập, đồng thời chặn cơ số âm để tránh NaN khi
-    // growthRate <= -100%.
     let growthBase = Math.max(0, 1 + growthRate / 100);
     let dailyGrowthFactor = Math.pow(growthBase, 1 / 30);
     let cumulativeGrowth = 1;
@@ -431,15 +426,13 @@ async function runCustomerForecast() {
         dailySystemForecast.push(Math.round(dailyForecast));
     }
 
-    // Nhiệt độ cao nhất bình quân 30 ngày T+1
     let avgTempM1 = sumTemp / 30;
     let offsetM2 = parseFloat(document.getElementById('scenarioM2').value);
-    let avgTempM2 = avgTempM1 + offsetM2; // Nhiệt độ cao nhất bình quân T+2
+    let avgTempM2 = avgTempM1 + offsetM2;
 
     let weatherImpactM1 = (avgTempM1 - baselineTemp > 0) ? (avgTempM1 - baselineTemp) * sensitivity : 0;
     let weatherImpactM2 = (avgTempM2 - baselineTemp > 0) ? (avgTempM2 - baselineTemp) * sensitivity : 0;
 
-    // 4. Phân bổ dự báo xuống Từng Khách hàng (Vi mô)
     let tableHTML = "";
     globalReportData = [];
     let sumM1 = 0, sumM2 = 0;
@@ -478,7 +471,6 @@ async function runCustomerForecast() {
 
     document.querySelector("#detailTable tbody").innerHTML = tableHTML;
 
-    // 5. Hiển thị Khối Tổng kết dạng thẻ KPI
     let growthM1Pct = totalBaseSystemLoad === 0 ? 0 : ((sumM1 - totalBaseSystemLoad) / totalBaseSystemLoad * 100);
     let growthM2Pct = totalBaseSystemLoad === 0 ? 0 : ((sumM2 - totalBaseSystemLoad) / totalBaseSystemLoad * 100);
 
@@ -504,7 +496,6 @@ async function runCustomerForecast() {
     `;
     document.getElementById('summaryPeriodText').innerHTML = summaryHTML;
 
-    // 6. Vẽ biểu đồ dựa trên nhiệt độ cao nhất thực tế từng ngày
     const ctx = document.getElementById('forecastChart').getContext('2d');
     if (myChart) { myChart.destroy(); }
 
@@ -513,7 +504,7 @@ async function runCustomerForecast() {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Dự báo Phụ tải Tổng Hệ thống theo API Thời tiết (kWh/ngày)',
+                label: 'Dự báo Phụ tải Tổng Hệ thống theo Tmax (kWh/ngày)',
                 data: dailySystemForecast,
                 borderColor: '#dc2626',
                 backgroundColor: 'rgba(220, 38, 38, 0.08)',
@@ -532,7 +523,7 @@ async function runCustomerForecast() {
                 tooltip: {
                     callbacks: {
                         afterLabel: function(context) {
-                            return 'Nhiệt độ cao nhất: ' + dailyTemperatures[context.dataIndex].toFixed(1) + '°C';
+                            return 'Nhiệt độ cao nhất (Tmax): ' + dailyTemperatures[context.dataIndex].toFixed(1) + '°C';
                         }
                     }
                 }
@@ -544,7 +535,6 @@ async function runCustomerForecast() {
     });
 }
 
-// Chức năng Xuất File
 function exportToExcel() {
     if (globalReportData.length === 0) return;
     let worksheet = XLSX.utils.json_to_sheet(globalReportData);
@@ -556,12 +546,12 @@ function exportToExcel() {
 function exportToPDF() {
     let element = document.getElementById('reportContent');
     let opt = {
-        margin:       [0.5, 0.5, 0.5, 0.5],
+        margin:       [10, 10, 10, 10],
         filename:     'BaoCao_DuBaoDien.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: element.scrollWidth },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        html2canvas:  { scale: 2, useCORS: true, logging: false, windowWidth: element.scrollWidth },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['css', 'legacy'] }
     };
     html2pdf().from(element).set(opt).save();
 }
