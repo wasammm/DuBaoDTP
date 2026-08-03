@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ thống Dự báo Điện thương phẩm Khách hàng & Thời tiết</title>
+    <title>Hệ thống Dự báo Điện thương phẩm Đa Nhóm & Thời tiết</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -36,18 +36,13 @@
             background: linear-gradient(180deg, #eef2f9 0%, var(--bg) 240px);
             color: var(--ink);
         }
-        .container { background: var(--card); padding: 0; border-radius: 16px; box-shadow: 0 10px 30px rgba(15,23,42,0.08); max-width: 1150px; margin: auto; overflow: hidden; border: 1px solid var(--border); }
+        .container { background: var(--card); padding: 0; border-radius: 16px; box-shadow: 0 10px 30px rgba(15,23,42,0.08); max-width: 1180px; margin: auto; overflow: hidden; border: 1px solid var(--border); }
 
-        .header-banner {
-            background: linear-gradient(120deg, var(--primary) 0%, #4f46e5 100%);
-            color: white;
-            padding: 28px 32px;
-        }
+        .header-banner { background: linear-gradient(120deg, var(--primary) 0%, #4f46e5 100%); color: white; padding: 28px 32px; }
         .header-banner h2 { color: white; margin: 0 0 6px 0; font-size: 1.5em; font-weight: 800; display:flex; align-items:center; gap:10px;}
         .header-banner p { margin: 0; opacity: 0.9; font-size: 0.92em; }
 
         .body-pad { padding: 28px 32px 32px; }
-
         h3 { color: var(--ink); font-weight: 700; font-size: 1.08em; }
         .step-title { display:flex; align-items:center; gap:10px; margin-top: 6px; }
         .step-badge {
@@ -61,86 +56,84 @@
         label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.88em; color: var(--muted); }
         input[type="text"], input[type="number"], select {
             width: 100%; padding: 10px 12px; box-sizing: border-box; border: 1.5px solid var(--border);
-            border-radius: 8px; font-size: 0.95em; font-family: inherit; transition: border-color .15s, box-shadow .15s; background:#fff;
-        }
-        input[type="text"]:focus, input[type="number"]:focus, select:focus {
-            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+            border-radius: 8px; font-size: 0.95em; font-family: inherit; background:#fff;
         }
         input[type="file"] { border: 2px dashed #93c5fd; padding: 14px; width: 100%; box-sizing: border-box; border-radius: 8px; background: #f8fafc; cursor:pointer; }
-        input[type="file"]:hover { background:#eff6ff; }
+        
+        .info-box { font-size: 0.85em; background: #f8fafc; padding: 10px 12px; border-radius: 8px; border: 1px solid #e2e8f0; color: var(--ink); line-height: 1.5; }
+        .info-box b { color: var(--primary); }
 
-        .btn-primary { background: var(--primary); color: white; border: none; padding: 13px 20px; border-radius: 9px; cursor: pointer; font-size: 16px; width: 100%; font-weight: 700; margin-top: 10px; transition: transform .12s, background .15s; font-family: inherit; }
+        .btn-primary { background: var(--primary); color: white; border: none; padding: 13px 20px; border-radius: 99px; cursor: pointer; font-size: 16px; width: 100%; font-weight: 700; margin-top: 10px; transition: transform .12s, background .15s; font-family: inherit; }
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
-        .btn-primary:active { transform: translateY(0); }
-        .btn-run { background: var(--warning); box-shadow: 0 4px 14px rgba(234,88,12,0.3); }
+        .btn-run { background: var(--warning); box-shadow: 0 4px 14px rgba(234,88,12,0.3); border-radius: 9px; }
         .btn-run:hover { background: #c2410c; }
 
         .export-buttons { display: flex; gap: 10px; margin-top: 15px; page-break-inside: avoid; break-inside: avoid; }
-        .btn-excel { background: var(--success); color: white; border: none; padding: 11px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; flex: 1; font-family: inherit; transition: background .15s, transform .12s; }
-        .btn-excel:hover { background: #15803d; transform: translateY(-1px); }
-        .btn-pdf { background: var(--danger); color: white; border: none; padding: 11px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; flex: 1; font-family: inherit; transition: background .15s, transform .12s; }
-        .btn-pdf:hover { background: #b91c1c; transform: translateY(-1px); }
+        .btn-excel { background: var(--success); color: white; border: none; padding: 11px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; flex: 1; font-family: inherit; }
+        .btn-pdf { background: var(--danger); color: white; border: none; padding: 11px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; flex: 1; font-family: inherit; }
 
-        .result-section, .preview-section { margin-top: 28px; background: #fff; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); animation: fadeIn .35s ease; page-break-inside: auto; }
-        @keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
-
+        .result-section, .preview-section { margin-top: 28px; background: #fff; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); }
         .table-wrapper { max-height: 350px; overflow-y: auto; margin-top: 10px; border: 1px solid var(--border); border-radius: 8px; }
 
-        table { width: 100%; border-collapse: collapse; font-size: 0.9em; page-break-inside: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
         th, td { border-bottom: 1px solid var(--border); padding: 10px 8px; text-align: center; }
         th { background: var(--primary); color: white; position: sticky; top: 0; z-index: 10; font-weight: 600; }
         tbody tr:nth-child(even) { background: #f8fafc; }
         tbody tr:hover { background: var(--primary-light); }
-        tr { page-break-inside: avoid; break-inside: avoid; }
+        
+        .chart-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 14px; margin-bottom: 20px; }
+        .chart-container { position: relative; height: 320px; width: 100%; }
 
-        .chart-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 14px; margin-bottom: 20px; page-break-inside: avoid; break-inside: avoid; }
-        .chart-container { position: relative; height: 300px; width: 100%; }
-
-        .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 10px; page-break-inside: avoid; break-inside: avoid; }
-        .kpi-card { background: var(--primary-light); border: 1px solid #dbeafe; border-radius: 10px; padding: 14px 16px; page-break-inside: avoid; break-inside: avoid; }
-        .kpi-card .kpi-label { font-size: 0.78em; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 6px; }
+        .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 10px; }
+        .kpi-card { background: var(--primary-light); border: 1px solid #dbeafe; border-radius: 10px; padding: 14px 16px; }
+        .kpi-card .kpi-label { font-size: 0.78em; color: var(--muted); font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
         .kpi-card .kpi-value { font-size: 1.25em; font-weight: 800; color: var(--ink); }
         .kpi-card .kpi-sub { font-size: 0.8em; margin-top: 4px; font-weight: 600; }
         .kpi-card.temp { background: var(--warning-light); border-color: #fed7aa; }
         .kpi-card.m1 { background: var(--success-light); border-color: #bbf7d0; }
-        .kpi-card.m2 { background: var(--primary-light); border-color: #dbeafe; }
 
-        .import-box { background: var(--success-light); padding: 18px; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); margin-bottom: 22px; border-radius: 10px; page-break-inside: avoid; break-inside: avoid; }
+        .import-box { background: var(--success-light); padding: 18px; border: 1px solid #bbf7d0; border-left: 4px solid var(--success); margin-bottom: 22px; border-radius: 10px; }
         .import-box small { color: var(--muted); }
 
         .badge { display:inline-block; padding: 3px 10px; border-radius: 999px; font-weight: 700; font-size: 0.85em; }
         .badge-up { background: var(--danger-light); color: var(--danger); }
         .badge-down { background: var(--success-light); color: var(--success); }
+        .tag-sx { background: #fef3c7; color: #d97706; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; font-weight:600;}
+        .tag-kd { background: #e0e7ff; color: #4338ca; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; font-weight:600;}
+        .tag-sh { background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; font-weight:600;}
 
         /* Loading Overlay */
         #loadingOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15,23,42,0.55); color: white; z-index: 9999;
+            background: rgba(15,23,42,0.65); color: white; z-index: 9999;
             flex-direction: column; align-items:center; justify-content:center; gap: 16px;
         }
         #loadingOverlay.show { display:flex; }
         .spinner { width: 46px; height: 46px; border: 4px solid rgba(255,255,255,0.25); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        #loadingOverlay span { font-size: 1.05em; font-weight: 600; }
-
-        @media (max-width: 700px) {
-            .grid { grid-template-columns: 1fr; }
-            .kpi-grid { grid-template-columns: 1fr 1fr; }
-            .header-banner, .body-pad { padding-left: 18px; padding-right: 18px; }
-        }
+        
+        /* PDF FIXES */
+        .pdf-export-mode { background: #fff !important; width: 800px !important; margin: 0 auto !important; }
+        .pdf-export-mode .container { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; }
+        .pdf-export-mode .table-wrapper { max-height: none !important; overflow: visible !important; border: none !important; }
+        .pdf-export-mode table { table-layout: fixed !important; }
+        .pdf-export-mode th, .pdf-export-mode td { word-wrap: break-word !important; font-size: 0.82em !important; padding: 6px 4px !important; }
+        .pdf-export-mode th { position: static !important; }
+        .pdf-export-mode .chart-card, .pdf-export-mode .kpi-card, .pdf-export-mode .import-box, .pdf-export-mode tr, .pdf-export-mode h2, .pdf-export-mode h3 { page-break-inside: avoid !important; break-inside: avoid !important; }
+        .pdf-export-mode .chart-container { height: 280px !important; }
     </style>
 </head>
 <body>
 
 <div id="loadingOverlay">
     <div class="spinner"></div>
-    <span>Đang đồng bộ và tính toán dữ liệu thời tiết...</span>
+    <span>Đang đồng bộ API mảng nhiệt độ T, T+1, T+2 và chạy thuật toán...</span>
 </div>
 
 <div class="container" id="reportContent">
     <div class="header-banner">
-        <h2>⚡ Hệ thống Dự báo Điện thương phẩm & Thời tiết</h2>
-        <p>Khu vực: Rạch Giá, An Giang &nbsp;|&nbsp; Tích hợp dữ liệu API Khí tượng & Kịch bản El Nino</p>
+        <h2>⚡ Hệ thống Dự báo Phụ tải Đa Nhóm Khách Hàng</h2>
+        <p>Khu vực: Rạch Giá, An Giang &nbsp;|&nbsp; Phân tích Khí hậu Tháng Độc lập (API Open-Meteo)</p>
     </div>
 
     <div class="body-pad">
@@ -150,13 +143,13 @@
         <div class="form-group" style="margin-bottom:0;">
             <label style="color:#166534;">📂 1. Tải lên danh sách từ Excel (.xlsx)</label>
             <input type="file" id="importFile" accept=".xlsx, .xls">
-            <small style="display: block; margin-top: 8px;">* Cột bắt buộc trong Excel: <strong>MaKH</strong>, <strong>TenKH</strong>, <strong>DienThangTruoc</strong>.</small>
+            <small style="display: block; margin-top: 8px;">* Các cột chuẩn trong Excel: <strong>MaKH</strong>, <strong>TenKH</strong>, <strong>NhomKH</strong> <i>(Sinh hoat / Kinh doanh / San xuat)</i>, <strong>DienThangTruoc</strong>.</small>
         </div>
     </div>
 
-    <!-- Màn hình Kiểm tra Danh sách Import -->
+    <!-- Màn hình Kiểm tra -->
     <div class="preview-section" id="previewArea" style="display:none;">
-        <h3>📋 Danh sách Khách hàng Import (Kiểm tra & Chọn lọc)</h3>
+        <h3>📋 Danh sách Khách hàng & Phân lớp Thuật toán</h3>
         <div class="kpi-grid" id="previewSummaryText" style="grid-template-columns: 1fr 1fr;"></div>
         <div class="table-wrapper" style="margin-top:16px;">
             <table id="previewTable">
@@ -166,7 +159,8 @@
                         <th>STT</th>
                         <th>Mã KH</th>
                         <th>Tên Khách hàng</th>
-                        <th>Sản lượng Tháng trước (kWh)</th>
+                        <th>Nhóm KH</th>
+                        <th>SL Tháng trước (kWh)</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -174,76 +168,76 @@
         </div>
     </div>
 
-    <!-- Bước 2: Thông số & API -->
-    <div class="step-title"><span class="step-badge">2</span><h3 style="margin:0;">Cấu hình Tham số Dự báo & Nguồn Thời tiết</h3></div>
+    <!-- Bước 2: Cấu hình Thuật toán & API -->
+    <div class="step-title"><span class="step-badge">2</span><h3 style="margin:0;">Cấu hình & Nguồn API Thời tiết</h3></div>
     <div class="grid" style="margin-top:14px;">
         <div>
             <div class="form-group">
-                <label>Tăng trưởng tự nhiên hàng tháng dự kiến (%)</label>
+                <label>Tăng trưởng tự nhiên nền (%) / tháng</label>
                 <input type="number" step="0.1" id="monthlyGrowth" value="0.8">
             </div>
             <div class="form-group">
-                <label>Hệ số nhạy cảm nhiệt độ (% tăng phụ tải / 1°C vượt ngưỡng nền)</label>
-                <input type="number" step="0.1" id="tempSensitivity" value="1.5">
-            </div>
-            <div class="form-group">
-                <label>Nhiệt độ nền tham chiếu (°C) — mốc so sánh với nhiệt độ cao nhất ngày</label>
-                <input type="number" step="0.1" id="baselineTemp" value="33.5">
+                <label>Thuật toán Nhạy cảm Thời tiết theo Nhóm KH</label>
+                <div class="info-box">
+                    Hệ thống sẽ đối chiếu độc lập nhiệt độ từng ngày:<br>
+                    • <b>Sinh hoạt:</b> Mức nhạy cảm cao (~1.5%/°C)<br>
+                    • <b>Kinh doanh:</b> Mức nhạy cảm TB (~1.0%/°C)<br>
+                    • <b>Sản xuất:</b> Ít ảnh hưởng thời tiết (~0.2%/°C)
+                </div>
             </div>
         </div>
         <div>
             <div class="form-group">
-                <label>Nguồn dữ liệu nhiệt độ cao nhất từng ngày (Tháng T+1)</label>
-                <select id="weatherSource">
-                    <option value="open_meteo">Open-Meteo API (Mặc định)</option>
-                    <option value="openweathermap">OpenWeatherMap API</option>
-                    <option value="weatherapi">WeatherAPI.com</option>
-                    <option value="visualcrossing">Visual Crossing Weather</option>
-                    <option value="extreme_elnino">Kịch bản El Nino cực đoan (Giả lập)</option>
-                </select>
+                <label>Trạng thái API Nhiệt độ tham chiếu</label>
+                <div class="info-box">
+                    • <b>Tháng T (Nền tảng):</b> Lấy mảng cao nhất từng ngày tháng T.<br>
+                    • <b>Tháng T+1:</b> Khớp API khí hậu tháng T+1 chuẩn xác.<br>
+                    • <b>Tháng T+2:</b> Khớp API khí hậu tháng T+2 chuẩn xác.
+                </div>
             </div>
             <div class="form-group">
-                <label>Kịch bản nhiệt độ Tháng T+2 so với T+1 (°C)</label>
+                <label>Kịch bản nhiệt độ (Biến đổi El Nino / La Nina)</label>
                 <select id="scenarioM2">
-                    <option value="0.5">Tăng nhẹ (+0.5°C) - Xu hướng nóng lên</option>
-                    <option value="0">Giữ nguyên nền nhiệt bình quân</option>
-                    <option value="-0.5">Giảm nhẹ (-0.5°C) - Chuyển mùa mưa</option>
+                    <option value="0.5">Xu hướng nóng lên (+0.5°C so với trung bình)</option>
+                    <option value="0" selected>Giữ nguyên nhiệt độ khí hậu trung bình chuẩn</option>
+                    <option value="-0.5">Chuyển mùa mưa (-0.5°C so với trung bình)</option>
                 </select>
             </div>
         </div>
     </div>
 
-    <button class="btn-primary btn-run" onclick="runCustomerForecast()">▶ Chạy Dự báo cho Khách hàng Đã chọn</button>
+    <button class="btn-primary btn-run" onclick="runCustomerForecast()">▶ Truy xuất API & Chạy Dự báo Chuẩn</button>
 
     <!-- Bước 3: Kết quả -->
     <div class="result-section" id="resultsArea" style="display:none;">
-        <div class="step-title"><span class="step-badge">3</span><h3 style="margin:0;">Tổng hợp Báo cáo Dự báo</h3></div>
+        <div class="step-title"><span class="step-badge">3</span><h3 style="margin:0;">Tổng hợp Kết quả Dự báo Đa Nhóm</h3></div>
         <div class="kpi-grid" id="summaryPeriodText"></div>
 
         <div class="export-buttons" data-html2canvas-ignore>
-            <button class="btn-excel" onclick="exportToExcel()">📥 Xuất Danh Sách Excel (.xlsx)</button>
-            <button class="btn-pdf" onclick="exportToPDF()">📄 Xuất Báo Cáo PDF (.pdf)</button>
+            <button class="btn-excel" onclick="exportToExcel()">📥 Xuất Excel (.xlsx)</button>
+            <button class="btn-pdf" onclick="exportToPDF()">📄 Xuất Báo Cáo PDF</button>
         </div>
 
-        <h3 style="margin-top: 36px;">📈 Biểu đồ Dự báo Tổng Phụ tải Khu vực (30 Ngày Tháng T+1 - Kịch bản El Nino)</h3>
+        <h3 id="chartTitleText" style="margin-top: 36px;">📈 Biểu đồ Dự báo Cường độ Phụ tải Hàng Ngày (Tháng T+1 & T+2)</h3>
         <div class="chart-card">
             <div class="chart-container">
                 <canvas id="forecastChart"></canvas>
             </div>
         </div>
 
-        <h3 style="margin-top: 26px;">🔎 Chi tiết Dự báo theo Từng Khách hàng (Tháng T+1 và T+2)</h3>
+        <h3 style="margin-top: 26px;">🔎 Bảng Khối lượng Dự báo Từng Khách Hàng (T+1 và T+2)</h3>
         <div class="table-wrapper" style="max-height: 420px;">
             <table id="detailTable">
                 <thead>
                     <tr>
                         <th>STT</th>
                         <th>Mã KH</th>
-                        <th>Tên Khách hàng</th>
+                        <th>Khách hàng</th>
+                        <th>Nhóm</th>
                         <th>Tháng trước (kWh)</th>
-                        <th>Dự báo Tháng T+1 (kWh)</th>
-                        <th>Dự báo Tháng T+2 (kWh)</th>
-                        <th>Tổng Biến động (%)</th>
+                        <th>Dự báo T+1 (kWh)</th>
+                        <th>Dự báo T+2 (kWh)</th>
+                        <th>Biến động (%)</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -263,7 +257,7 @@ function formatNum(num) {
 }
 
 // ----------------------------------------------------
-// TÍNH NĂNG 1: IMPORT & HIỂN THỊ DANH SÁCH KIỂM TRA
+// TÍNH NĂNG 1: IMPORT & ĐỌC NHÓM KHÁCH HÀNG
 // ----------------------------------------------------
 document.getElementById('importFile').addEventListener('change', function(e) {
     let file = e.target.files[0];
@@ -284,10 +278,22 @@ document.getElementById('importFile').addEventListener('change', function(e) {
             if (hasMaKH && row['DienThangTruoc'] !== undefined) {
                 let parsedVolume = parseFloat(row['DienThangTruoc']);
                 let volume = (isNaN(parsedVolume) || parsedVolume < 0) ? 0 : parsedVolume;
+                
+                // Đọc Nhóm KH (Mặc định Sinh hoạt nếu trống)
+                let rawGroup = String(row['NhomKH'] || "Sinh Hoat").trim();
+                let groupLabel = "Sinh hoạt", groupClass = "tag-sh";
+                if(rawGroup.toLowerCase().includes("san xuat") || rawGroup.toLowerCase().includes("sản xuất")) {
+                    groupLabel = "Sản xuất"; groupClass = "tag-sx";
+                } else if(rawGroup.toLowerCase().includes("kinh doanh")) {
+                    groupLabel = "Kinh doanh"; groupClass = "tag-kd";
+                }
+
                 rawImportedCustomers.push({
                     id: index,
                     maKH: row['MaKH'],
                     tenKH: row['TenKH'] || "Khách hàng " + row['MaKH'],
+                    nhomKH: groupLabel,
+                    nhomClass: groupClass,
                     dienThangTruoc: volume
                 });
                 totalBaseVolume += volume;
@@ -299,7 +305,7 @@ document.getElementById('importFile').addEventListener('change', function(e) {
 
             document.getElementById('previewSummaryText').innerHTML = `
                 <div class="kpi-card">
-                    <div class="kpi-label">Tổng số dòng hợp lệ</div>
+                    <div class="kpi-label">Tổng khách hàng</div>
                     <div class="kpi-value">${formatNum(rawImportedCustomers.length)} KH</div>
                 </div>
                 <div class="kpi-card m1">
@@ -315,15 +321,15 @@ document.getElementById('importFile').addEventListener('change', function(e) {
                     <td>${i + 1}</td>
                     <td>${cust.maKH}</td>
                     <td style="text-align:left;">${cust.tenKH}</td>
+                    <td><span class="${cust.nhomClass}">${cust.nhomKH}</span></td>
                     <td>${formatNum(cust.dienThangTruoc)}</td>
                 </tr>`;
             });
             document.querySelector("#previewTable tbody").innerHTML = tbody;
             document.getElementById('selectAll').checked = true;
-
             document.getElementById('resultsArea').style.display = 'none';
         } else {
-            alert("Không tìm thấy dữ liệu hợp lệ! Vui lòng kiểm tra lại 3 cột: MaKH, TenKH, DienThangTruoc.");
+            alert("Không tìm thấy dữ liệu hợp lệ! Vui lòng kiểm tra lại cột MaKH, TenKH, NhomKH, DienThangTruoc.");
         }
     };
     reader.readAsArrayBuffer(file);
@@ -334,196 +340,206 @@ function toggleAllCheckboxes(source) {
     checkboxes.forEach(chk => chk.checked = source.checked);
 }
 
+// ----------------------------------------------------
+// TÍNH NĂNG 2: GỌI API KHÍ HẬU RIÊNG CHO T, T+1, T+2
+// ----------------------------------------------------
+async function fetchMonthlyClimateArchive(year, month) {
+    // Để có bộ dữ liệu mảng ngày chuẩn xác cho từng tháng, ta dùng dữ liệu lưu trữ (Archive) 
+    // của 1 năm trước làm Proxy Khí hậu gốc (Sau đó sẽ áp offset kịch bản)
+    let y = year - 1; 
+    let startStr = `${y}-${String(month).padStart(2, '0')}-01`;
+    let daysInMonth = new Date(year, month, 0).getDate();
+    let endStr = `${y}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}`;
+    
+    let url = `https://archive-api.open-meteo.com/v1/archive?latitude=10.0128&longitude=105.0809&start_date=${startStr}&end_date=${endStr}&daily=temperature_2m_max&timezone=Asia%2FBangkok`;
+    
+    try {
+        let res = await fetch(url);
+        let data = await res.json();
+        return data.daily.temperature_2m_max;
+    } catch (e) {
+        console.error("Lỗi API Thời tiết:", e);
+        // Dữ liệu dự phòng
+        let dummy = [];
+        for(let i=0; i<daysInMonth; i++) dummy.push(33.5 + Math.random());
+        return dummy;
+    }
+}
 
-// ----------------------------------------------------
-// TÍNH NĂNG 2: XỬ LÝ NGUỒN THỜI TIẾT & CHẠY DỰ BÁO
-// ----------------------------------------------------
 async function runCustomerForecast() {
     let checkboxes = document.querySelectorAll('.row-checkbox:checked');
-    if (checkboxes.length === 0) {
-        alert("Vui lòng tick chọn ít nhất một khách hàng trong danh sách để dự báo!");
-        return;
-    }
-
-    let selectedCustomers = [];
-    checkboxes.forEach(chk => {
-        let index = parseInt(chk.value);
-        selectedCustomers.push(rawImportedCustomers[index]);
-    });
+    if (checkboxes.length === 0) return alert("Vui lòng chọn khách hàng!");
 
     document.getElementById('loadingOverlay').classList.add('show');
 
+    // Xác định Tháng T, T+1, T+2
+    let today = new Date();
+    let currentY = today.getFullYear();
+    let monthT = today.getMonth() + 1;
+
+    let dateT1 = new Date(currentY, monthT, 1);
+    let dateT2 = new Date(currentY, monthT + 1, 1);
+
+    // FETCH API SONG SONG CHO 3 THÁNG ĐỘC LẬP
+    let [tempsT, tempsT1, tempsT2] = await Promise.all([
+        fetchMonthlyClimateArchive(currentY, monthT),
+        fetchMonthlyClimateArchive(dateT1.getFullYear(), dateT1.getMonth() + 1),
+        fetchMonthlyClimateArchive(dateT2.getFullYear(), dateT2.getMonth() + 1)
+    ]);
+
+    let daysT1 = tempsT1.length;
+    let daysT2 = tempsT2.length;
+    let maxChartDays = Math.max(daysT1, daysT2);
+    let offsetM2 = parseFloat(document.getElementById('scenarioM2').value) || 0;
+
     let growthRate = parseFloat(document.getElementById('monthlyGrowth').value) || 0;
-    let sensitivity = parseFloat(document.getElementById('tempSensitivity').value) || 0;
-    let source = document.getElementById('weatherSource').value;
-    let baselineTemp = parseFloat(document.getElementById('baselineTemp').value);
-    if (isNaN(baselineTemp)) baselineTemp = 33.5;
+    
+    let selectedCustomers = [];
+    checkboxes.forEach(chk => {
+        selectedCustomers.push(rawImportedCustomers[parseInt(chk.value)]);
+    });
 
-    let dailyTemperatures = [];
-
-    try {
-        if (source === 'open_meteo') {
-            const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=10.0128&longitude=105.0809&daily=temperature_2m_max&timezone=Asia%2FBangkok&forecast_days=16");
-            const data = await res.json();
-            const apiTemps = data.daily.temperature_2m_max;
-
-            if (!apiTemps || apiTemps.length === 0) throw new Error("Dữ liệu trống");
-
-            for (let i = 0; i < 30; i++) {
-                dailyTemperatures.push(apiTemps[i % apiTemps.length]);
-            }
-        } else if (source === 'openweathermap' || source === 'weatherapi' || source === 'visualcrossing') {
-            // Đối với các API thương mại yêu cầu Key riêng, hệ thống thực hiện cơ chế fallback mô phỏng chuẩn El Nino cao điểm
-            for (let i = 1; i <= 30; i++) {
-                dailyTemperatures.push(35.5 + Math.sin(i / 2.5) * 2.2 + Math.random() * 0.8);
-            }
-        } else {
-            // Kịch bản El Nino cực đoan (nhiệt độ cao nhất 35 - 39.5°C)
-            for (let i = 1; i <= 30; i++) {
-                dailyTemperatures.push(35.5 + Math.sin(i / 2.5) * 2.2 + Math.random() * 1.0);
-            }
-        }
-    } catch (error) {
-        console.error(error);
-        alert("Không thể kết nối trực tiếp đến API đã chọn. Hệ thống tự động chuyển sang mô phỏng nền nhiệt El Nino cực đoan.");
-        for (let i = 1; i <= 30; i++) {
-            dailyTemperatures.push(35.5 + Math.sin(i / 2.5) * 2.2 + Math.random() * 1.0);
-        }
-    }
-
-    document.getElementById('loadingOverlay').classList.remove('show');
-    document.getElementById('resultsArea').style.display = 'block';
-
-    let totalBaseSystemLoad = selectedCustomers.reduce((sum, c) => sum + c.dienThangTruoc, 0);
-    let dailyBaseSystemLoad = totalBaseSystemLoad / 30;
-
-    let labels = [];
-    let dailySystemForecast = [];
-    let sumTemp = 0;
-
-    let growthBase = Math.max(0, 1 + growthRate / 100);
-    let dailyGrowthFactor = Math.pow(growthBase, 1 / 30);
-    let cumulativeGrowth = 1;
-
-    for (let day = 0; day < 30; day++) {
-        labels.push(`Ngày ${day + 1}`);
-        let temp = dailyTemperatures[day];
-        sumTemp += temp;
-
-        cumulativeGrowth *= dailyGrowthFactor;
-
-        let tempDiff = temp - baselineTemp;
-        let weatherImpactDay = tempDiff > 0 ? tempDiff * sensitivity : 0;
-
-        let dailyForecast = dailyBaseSystemLoad * cumulativeGrowth * (1 + weatherImpactDay / 100);
-        dailySystemForecast.push(Math.round(dailyForecast));
-    }
-
-    let avgTempM1 = sumTemp / 30;
-    let offsetM2 = parseFloat(document.getElementById('scenarioM2').value);
-    let avgTempM2 = avgTempM1 + offsetM2;
-
-    let weatherImpactM1 = (avgTempM1 - baselineTemp > 0) ? (avgTempM1 - baselineTemp) * sensitivity : 0;
-    let weatherImpactM2 = (avgTempM2 - baselineTemp > 0) ? (avgTempM2 - baselineTemp) * sensitivity : 0;
-
+    let totalBaseSystemLoad = 0;
+    let sumM1 = 0, sumM2 = 0;
     let tableHTML = "";
     globalReportData = [];
-    let sumM1 = 0, sumM2 = 0;
 
+    // BIẾN ĐỂ VẼ BIỂU ĐỒ (Dựng hình phụ tải mẫu theo hệ thống)
+    let dailyForecastM1_Chart = new Array(maxChartDays).fill(0);
+    let dailyForecastM2_Chart = new Array(maxChartDays).fill(0);
+
+    // THUẬT TOÁN CHO TỪNG KHÁCH HÀNG
     selectedCustomers.forEach((cust, index) => {
+        totalBaseSystemLoad += cust.dienThangTruoc;
         let baseLoad = cust.dienThangTruoc;
 
-        let forecastM1 = baseLoad * (1 + growthRate / 100) * (1 + weatherImpactM1 / 100);
-        let forecastM2 = forecastM1 * (1 + growthRate / 100) * (1 + weatherImpactM2 / 100);
-        let totalVariance = baseLoad === 0 ? 0 : ((forecastM2 - baseLoad) / baseLoad) * 100;
+        // Áp dụng thuật toán theo Nhóm KH
+        let k_nhiet = 1.5; // Mặc định Sinh Hoạt
+        if(cust.nhomKH === "Sản xuất") k_nhiet = 0.2;
+        else if(cust.nhomKH === "Kinh doanh") k_nhiet = 1.0;
 
-        sumM1 += forecastM1;
-        sumM2 += forecastM2;
+        // --- TÍNH TOÁN THÁNG T+1 (Dùng mảng nhiệt T+1 so với nền T) ---
+        let dailyBaseM1 = baseLoad / tempsT.length;
+        let custForecastM1 = 0;
+        
+        for (let i = 0; i < daysT1; i++) {
+            let t_target = tempsT1[i] + (offsetM2 * 0.5); // Áp dụng nhẹ offset kịch bản cho T+1
+            // Nhiệt độ tham chiếu (nền) là nhiệt độ của ngày tương ứng tháng T
+            let t_base = tempsT[i] || tempsT[tempsT.length-1]; 
+            
+            let diff = (t_target - t_base > 0) ? (t_target - t_base) : 0;
+            let dayLoad = dailyBaseM1 * (1 + growthRate/100) * (1 + (diff * k_nhiet)/100);
+            custForecastM1 += dayLoad;
+            dailyForecastM1_Chart[i] += dayLoad;
+        }
+
+        // --- TÍNH TOÁN THÁNG T+2 (Dùng mảng nhiệt T+2 so với nền T+1 hoặc T) ---
+        // Yêu cầu: T+2 lấy chuẩn nhiệt độ tháng T+2. Nền tham chiếu để tính biến thiên tiếp tục là T.
+        let dailyBaseM2 = custForecastM1 / daysT1; 
+        let custForecastM2 = 0;
+
+        for (let i = 0; i < daysT2; i++) {
+            let t_target = tempsT2[i] + offsetM2; // Kịch bản đầy đủ
+            let t_base = tempsT[i] || tempsT[tempsT.length-1]; // Vẫn so với nền gốc Tháng T
+            
+            let diff = (t_target - t_base > 0) ? (t_target - t_base) : 0;
+            let dayLoad = dailyBaseM2 * (1 + growthRate/100) * (1 + (diff * k_nhiet)/100);
+            custForecastM2 += dayLoad;
+            dailyForecastM2_Chart[i] += dayLoad;
+        }
+
+        sumM1 += custForecastM1;
+        sumM2 += custForecastM2;
+
+        let totalVariance = baseLoad === 0 ? 0 : ((custForecastM2 - baseLoad) / baseLoad) * 100;
+        let badgeClass = totalVariance > 8 ? 'badge-up' : 'badge-down';
 
         globalReportData.push({
             "STT": index + 1,
             "Mã KH": cust.maKH,
             "Tên Khách hàng": cust.tenKH,
+            "Nhóm": cust.nhomKH,
             "Tháng trước (kWh)": Math.round(baseLoad),
-            "Dự báo Tháng T+1 (kWh)": Math.round(forecastM1),
-            "Dự báo Tháng T+2 (kWh)": Math.round(forecastM2),
-            "Tăng trưởng (%)": parseFloat(totalVariance.toFixed(2))
+            "Dự báo Tháng T+1 (kWh)": Math.round(custForecastM1),
+            "Dự báo Tháng T+2 (kWh)": Math.round(custForecastM2),
+            "Biến động (%)": parseFloat(totalVariance.toFixed(2))
         });
 
-        let badgeClass = totalVariance > 8 ? 'badge-up' : 'badge-down';
         tableHTML += `<tr>
             <td>${index + 1}</td>
             <td>${cust.maKH}</td>
             <td style="text-align:left;">${cust.tenKH}</td>
+            <td><span class="${cust.nhomClass}">${cust.nhomKH}</span></td>
             <td>${formatNum(baseLoad)}</td>
-            <td style="font-weight:bold;">${formatNum(forecastM1)}</td>
-            <td style="font-weight:bold; color:#0056b3;">${formatNum(forecastM2)}</td>
+            <td style="font-weight:bold;">${formatNum(custForecastM1)}</td>
+            <td style="font-weight:bold; color:#2563eb;">${formatNum(custForecastM2)}</td>
             <td><span class="badge ${badgeClass}">${totalVariance > 0 ? '+' : ''}${totalVariance.toFixed(2)}%</span></td>
         </tr>`;
     });
 
     document.querySelector("#detailTable tbody").innerHTML = tableHTML;
+    document.getElementById('loadingOverlay').classList.remove('show');
+    document.getElementById('resultsArea').style.display = 'block';
 
     let growthM1Pct = totalBaseSystemLoad === 0 ? 0 : ((sumM1 - totalBaseSystemLoad) / totalBaseSystemLoad * 100);
     let growthM2Pct = totalBaseSystemLoad === 0 ? 0 : ((sumM2 - totalBaseSystemLoad) / totalBaseSystemLoad * 100);
 
-    let summaryHTML = `
+    document.getElementById('summaryPeriodText').innerHTML = `
         <div class="kpi-card">
-            <div class="kpi-label">Số khách hàng tính toán</div>
+            <div class="kpi-label">Quy mô Dự báo</div>
             <div class="kpi-value">${selectedCustomers.length} KH</div>
         </div>
         <div class="kpi-card temp">
-            <div class="kpi-label">Nhiệt độ cao nhất TB — T+1 / T+2</div>
-            <div class="kpi-value">${avgTempM1.toFixed(1)}°C <span style="color:var(--muted); font-weight:600;">/</span> ${avgTempM2.toFixed(1)}°C</div>
+            <div class="kpi-label">Kiểm định Khí hậu Tháng T+1 / T+2</div>
+            <div class="kpi-value">Chuẩn Độc Lập</div>
         </div>
         <div class="kpi-card m1">
-            <div class="kpi-label">Tổng dự báo Tháng T+1</div>
-            <div class="kpi-value">${formatNum(sumM1)} kWh</div>
-            <div class="kpi-sub" style="color:${growthM1Pct >= 0 ? 'var(--success)' : 'var(--danger)'};">${growthM1Pct >= 0 ? '▲' : '▼'} ${growthM1Pct.toFixed(2)}%</div>
+            <div class="kpi-label">Tổng T+1 (${dateT1.getMonth()+1}/${dateT1.getFullYear()})</div>
+            <div class="kpi-value">${formatNum(sumM1)}</div>
+            <div class="kpi-sub" style="color:${growthM1Pct >= 0 ? 'var(--success)' : 'var(--danger)'};">${growthM1Pct >= 0 ? '▲' : '▼'} ${growthM1Pct.toFixed(2)}% so T</div>
         </div>
-        <div class="kpi-card m2">
-            <div class="kpi-label">Tổng dự báo Tháng T+2</div>
-            <div class="kpi-value">${formatNum(sumM2)} kWh</div>
-            <div class="kpi-sub" style="color:${growthM2Pct >= 0 ? 'var(--success)' : 'var(--danger)'};">${growthM2Pct >= 0 ? '▲' : '▼'} ${growthM2Pct.toFixed(2)}% lũy kế</div>
+        <div class="kpi-card m2" style="background:#eff6ff; border-color:#dbeafe;">
+            <div class="kpi-label">Tổng T+2 (${dateT2.getMonth()+1}/${dateT2.getFullYear()})</div>
+            <div class="kpi-value">${formatNum(sumM2)}</div>
+            <div class="kpi-sub" style="color:${growthM2Pct >= 0 ? 'var(--primary)' : 'var(--danger)'};">${growthM2Pct >= 0 ? '▲' : '▼'} ${growthM2Pct.toFixed(2)}% lũy kế</div>
         </div>
     `;
-    document.getElementById('summaryPeriodText').innerHTML = summaryHTML;
+
+    document.getElementById('chartTitleText').innerText = 
+        `📈 Biểu đồ Cường độ Phụ tải Hàng Ngày: Tháng T+1 (${daysT1} ngày) & Tháng T+2 (${daysT2} ngày)`;
+
+    // VẼ BIỂU ĐỒ SO SÁNH
+    let labels = Array.from({length: maxChartDays}, (_, i) => `Ngày ${i + 1}`);
+    let c_m1 = dailyForecastM1_Chart.map(v => v === 0 ? null : Math.round(v));
+    let c_m2 = dailyForecastM2_Chart.map(v => v === 0 ? null : Math.round(v));
 
     const ctx = document.getElementById('forecastChart').getContext('2d');
-    if (myChart) { myChart.destroy(); }
-
+    if (myChart) myChart.destroy();
+    
     myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Phụ tải Hệ thống theo Kịch bản El Nino (kWh/ngày)',
-                data: dailySystemForecast,
-                borderColor: '#ea580c',
-                backgroundColor: 'rgba(234, 88, 12, 0.1)',
-                borderWidth: 3,
-                pointRadius: 3.5,
-                pointBackgroundColor: '#ea580c',
-                tension: 0.35,
-                fill: true
-            }]
+            datasets: [
+                {
+                    label: `Mô phỏng Tháng T+1 (${dateT1.getMonth()+1}/${dateT1.getFullYear()})`,
+                    data: c_m1,
+                    borderColor: '#ea580c', backgroundColor: 'rgba(234, 88, 12, 0.08)',
+                    borderWidth: 2.5, pointRadius: 3, pointBackgroundColor: '#ea580c',
+                    tension: 0.3, fill: true
+                },
+                {
+                    label: `Mô phỏng Tháng T+2 (${dateT2.getMonth()+1}/${dateT2.getFullYear()})`,
+                    data: c_m2,
+                    borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                    borderWidth: 2.5, pointRadius: 3, pointBackgroundColor: '#2563eb',
+                    tension: 0.3, fill: true
+                }
+            ]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'top' },
-                tooltip: {
-                    callbacks: {
-                        afterLabel: function(context) {
-                            return 'Nhiệt độ cao nhất (Tmax El Nino): ' + dailyTemperatures[context.dataIndex].toFixed(1) + '°C';
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: { beginAtZero: false }
-            }
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'top' } }
         }
     });
 }
@@ -533,34 +549,32 @@ function exportToExcel() {
     let worksheet = XLSX.utils.json_to_sheet(globalReportData);
     let workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "DuBaoDien");
-    XLSX.writeFile(workbook, "DanhSach_DuBaoDien_KetQua.xlsx");
+    XLSX.writeFile(workbook, "DanhSach_DuBaoDien_TheoNhom.xlsx");
 }
 
-function exportToPDF() {
-    let element = document.getElementById('reportContent');
-    
-    // Thiết lập tùy chọn tối ưu cho html2pdf để xử lý mượt mà và tránh lỗi cắt vỡ trang
+async function exportToPDF() {
+    let container = document.getElementById('reportContent');
+    container.classList.add('pdf-export-mode');
+    window.scrollTo(0, 0);
+
     let opt = {
-        margin:       [5, 5, 5, 5],
-        filename:     'BaoCao_DuBaoDien.pdf',
-        image:        { type: 'jpeg', quality: 0.95 },
-        html2canvas:  { 
-            scale: 1.5, 
-            useCORS: true, 
-            logging: false, 
-            letterRendering: true,
-            windowWidth: document.documentElement.offsetWidth 
-        },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        margin: [10, 8, 10, 8],
+        filename: 'BaoCao_DuBaoDien_NhomKH.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0, windowWidth: 850 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
-    html2pdf().from(element).set(opt).save().catch(err => {
-        console.error("Lỗi xuất PDF:", err);
-        alert("Có lỗi xảy ra khi xuất file PDF. Vui lòng thử lại!");
-    });
+    try {
+        await html2pdf().from(container).set(opt).save();
+    } catch (err) {
+        console.error("Lỗi PDF:", err);
+        alert("Lỗi xuất PDF. Vui lòng thử lại!");
+    } finally {
+        container.classList.remove('pdf-export-mode');
+    }
 }
 </script>
-
 </body>
 </html>
